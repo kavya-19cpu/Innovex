@@ -1,0 +1,104 @@
+ <!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Innovex 🛍️</title>
+
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <!-- HAMBURGER MENU -->
+
+  <div class="hamburger" onclick="toggleMenu()">
+    ☰
+  </div>
+
+  <!-- SIDE MENU -->
+
+  <div id="sideMenu" class="side-menu">
+
+    <h3>Categories</h3>
+
+    <div class="cat-list">
+
+      <button onclick="filterProducts('All')">
+        All Products
+      </button>
+
+      <button onclick="filterProducts('Saree')">
+        Sarees
+      </button>
+
+      <button onclick="filterProducts('Clothing')">
+        Clothing
+      </button>
+
+      <button onclick="filterProducts('Shoes')">
+        Shoes
+      </button>
+
+      <button onclick="filterProducts('Bags')">
+        Bags
+      </button>
+
+      <button onclick="filterProducts('Accessories')">
+        Accessories
+      </button>
+
+    </div>
+
+  </div>
+
+  <!-- NAVBAR -->
+
+  <div class="navbar">
+
+    <div style="width:40px;"></div>
+
+    <h1 class="logo">
+      INNOVEX
+    </h1>
+
+    <div class="nav-actions">
+
+      <input 
+        type="text"
+        id="search"
+        placeholder="Search curated products..."
+      >
+
+      <button onclick="location.href='cart.html'" class="view-cart-btn">
+        View Cart
+      </button>
+
+    </div>
+
+  </div>
+
+  <!-- CART INFO -->
+
+  <p class="cart-info-bar">
+    Bag Status:
+    <span id="count">0</span>
+    items selected
+  </p>
+
+  <!-- PRODUCTS -->
+
+  <div id="products"></div>
+
+  <!-- TOAST NOTIFICATION -->
+
+  <div id="toast"></div>
+
+  <!-- SCRIPT -->
+
+  <script src="script.js"></script>
+
+</body>
+
+</html>
