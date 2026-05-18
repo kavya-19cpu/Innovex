@@ -15,7 +15,8 @@ app.get("/products", (req, res) => {
 
   res.json(JSON.parse(data));
 });
+const PORT = process.env.PORT || 45000;
 
-app.listen(45000, () => {
-  console.log("Server running on http://localhost:45000");
+app.listen(PORT, () => {
+  console.log("Server running on port " + PORT);
 });
