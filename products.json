@@ -1,4 +1,4 @@
-[
+   [
   {
     "id": 1,
     "name": "White T-Shirt",
@@ -222,5 +222,13 @@
     "rating": 5,
     "category": "Shoes",
     "image": "https://images.unsplash.com/photo-1533867617858-e7b97e060509"
+  },
+  {
+    "id": 29,
+    "name": "Gold Ring",
+    "price": 899,
+    "rating": 4,
+    "category": "Accessories",
+    "image": "https://images.unsplash.com/photo-1605100804763-247f67b3557e"
   }
-]
+]   
