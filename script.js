@@ -1,202 +1,175 @@
-let cart = JSON.parse(localStorage.getItem("cart")) || [];
+const loggedUser =
+JSON.parse(localStorage.getItem("loggedInUser"));
+
+if(!loggedUser){
+
+window.location.href="login.html";
+}
+
+let cart =
+JSON.parse(localStorage.getItem("cart")) || [];
+
 let allProducts = [];
 
-/* =========================================================
-   UPDATE CART COUNT
-========================================================= */
+function updateCount(){
 
-function updateCount() {
+const count =
+document.getElementById("count");
 
-  const count = document.getElementById("count");
+let total =
+cart.reduce((sum,item)=>sum+item.qty,0);
 
-  if (count) {
-
-    let total = cart.reduce((sum, item) => sum + item.qty, 0);
-
-    count.innerText = total;
-  }
+count.innerText = total;
 }
 
 updateCount();
 
-/* =========================================================
-   TOGGLE MENU
-========================================================= */
+/* MENU */
 
-function toggleMenu() {
+function toggleMenu(){
 
-  document.getElementById("sideMenu").classList.toggle("open");
+document
+.getElementById("sideMenu")
+.classList.toggle("open");
 }
 
-/* =========================================================
-   FETCH PRODUCTS FROM SERVER
-========================================================= */
+/* FETCH PRODUCTS */
 
 fetch("/products")
 
-  .then(response => response.json())
+.then(res => res.json())
 
-  .then(data => {
+.then(data => {
 
-    allProducts = data;
+allProducts = data;
 
-    showProducts(allProducts);
-  })
+showProducts(allProducts);
+});
 
-  .catch(error => {
+/* SHOW PRODUCTS */
 
-    console.log("Error loading products:", error);
-  });
+function showProducts(products){
 
-/* =========================================================
-   SHOW PRODUCTS
-========================================================= */
+const productsBox =
+document.getElementById("products");
 
-function showProducts(products) {
+productsBox.innerHTML = "";
 
-  const productsBox = document.getElementById("products");
+products.forEach(product => {
 
-  if (!productsBox) return;
+productsBox.innerHTML += `
 
-  productsBox.innerHTML = "";
+<div class="card">
 
-  if (products.length === 0) {
+<img
+src="${product.image}"
+onerror="this.src='https://via.placeholder.com/300'"
+>
 
-    productsBox.innerHTML = `
-      <h2 style="margin-top:50px;">
-        No products found
-      </h2>
-    `;
+<h3>${product.name}</h3>
 
-    return;
-  }
+<p>₹${product.price}</p>
 
-  products.forEach(product => {
+<button onclick="addToCart(${product.id})">
+Add To Cart
+</button>
 
-    productsBox.innerHTML += `
-
-      <div class="card">
-
-        <img 
-          src="${product.image}"
-          onerror="this.src='https://via.placeholder.com/220'"
-        >
-
-        <h3>${product.name}</h3>
-
-        <p>₹${product.price}</p>
-
-        <button onclick="addToCart(${product.id})">
-          Add to Cart
-        </button>
-
-      </div>
-
-    `;
-  });
+</div>
+`;
+});
 }
 
-/* =========================================================
-   FILTER PRODUCTS
-========================================================= */
+/* FILTER */
 
-function filterProducts(category) {
+function filterProducts(category){
 
-  if (category === "All") {
+if(category==="All"){
 
-    showProducts(allProducts);
+showProducts(allProducts);
 
-  } else {
+}else{
 
-    let filteredProducts = allProducts.filter(product =>
-      product.category === category
-    );
+let filtered =
+allProducts.filter(product =>
+product.category===category
+);
 
-    showProducts(filteredProducts);
-  }
-
-  document.getElementById("sideMenu").classList.remove("open");
+showProducts(filtered);
 }
 
-/* =========================================================
-   SEARCH PRODUCTS
-========================================================= */
-
-const search = document.getElementById("search");
-
-if (search) {
-
-  search.addEventListener("input", function () {
-
-    let value = this.value.toLowerCase();
-
-    let filtered = allProducts.filter(product =>
-
-      product.name.toLowerCase().includes(value)
-
-    );
-
-    showProducts(filtered);
-  });
+document
+.getElementById("sideMenu")
+.classList.remove("open");
 }
 
-/* =========================================================
-   ADD TO CART
-========================================================= */
+/* SEARCH */
 
-function addToCart(id) {
+const search =
+document.getElementById("search");
 
-  let product = allProducts.find(item => item.id === id);
+search.addEventListener("input",function(){
 
-  if (!product) return;
+let value =
+this.value.toLowerCase();
 
-  let existing = cart.find(item => item.id === id);
+let filtered =
+allProducts.filter(product =>
 
-  if (existing) {
+product.name
+.toLowerCase()
+.includes(value)
 
-    existing.qty++;
+);
 
-  } else {
+showProducts(filtered);
+});
 
-    cart.push({
-      ...product,
-      qty: 1
-    });
-  }
+/* ADD TO CART */
 
-  localStorage.setItem("cart", JSON.stringify(cart));
+function addToCart(id){
 
-  updateCount();
+let product =
+allProducts.find(item => item.id===id);
 
-  showToast(product.name + " added to cart");
+let existing =
+cart.find(item => item.id===id);
+
+if(existing){
+
+existing.qty++;
+
+}else{
+
+cart.push({
+...product,
+qty:1
+});
 }
 
-/* =========================================================
-   TOAST MESSAGE
-========================================================= */
+localStorage.setItem(
+"cart",
+JSON.stringify(cart)
+);
 
-function showToast(message) {
+updateCount();
 
-  const toast = document.getElementById("toast");
-
-  if (!toast) return;
-
-  toast.innerText = message;
-
-  toast.classList.add("show");
-
-  setTimeout(() => {
-
-    toast.classList.remove("show");
-
-  }, 2000);
+showToast("Added To Cart");
 }
 
-/* =========================================================
-   GO TO CART PAGE
-========================================================= */
+/* TOAST */
 
-function goToCart() {
+function showToast(message){
 
-  window.location.href = "cart.html";
+const toast =
+document.getElementById("toast");
+
+toast.innerText = message;
+
+toast.classList.add("show");
+
+setTimeout(()=>{
+
+toast.classList.remove("show");
+
+},2000);
 }
