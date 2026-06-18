@@ -2,30 +2,37 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Innovex Cart 🛒</title>
-  <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<title>Cart</title>
+
+<link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-  <button onclick="location.href='index.html'" style="margin: 20px; background: #333;">← Back to Store</button>
+<button onclick="location.href='index.html'">
+← Back
+</button>
 
-  <h1>Innovex Cart 🛒</h1>
+<h1>
+Innovex Cart
+</h1>
 
-  <div id="cartBox" style="max-width: 600px; margin: 0 auto; padding: 20px;"></div>
+<div id="cartBox"></div>
 
-  <div id="checkoutBox"
-    style="margin-top: 30px; padding: 20px; background: white; display: inline-block; border-radius: 10px; box-shadow: 0 0 10px #ccc;">
-    <h2 id="total" style="margin-bottom: 15px;">Total: ₹0</h2>
-    <button id="buyNowBtn" onclick="placeCODOrder()"
-      style="background: #ff9900; color: black; font-weight: bold; width: 200px; padding: 12px;">
-      Proceed to Buy (COD)
-    </button>
-  </div>
+<div id="checkoutBox">
 
-  <script src="cart.js"></script>
+<h2 id="total">
+Total: ₹0
+</h2>
+
+<button onclick="placeCODOrder()">
+Proceed To Buy
+</button>
+
+</div>
+
+<script src="cart.js"></script>
+
 </body>
-
 </html>
