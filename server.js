@@ -1,29 +1,59 @@
 const express = require("express");
+
 const fs = require("fs");
+
 const path = require("path");
 
 const app = express();
 
-app.use(express.static("public"));
+/* STATIC FOLDER */
 
-// ✅ HOME ROUTE (FIX for Cannot GET /)
-app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "index.html"));
+app.use(
+express.static(
+path.join(__dirname,"public")
+)
+);
+
+/* HOME ROUTE */
+
+app.get("/",(req,res)=>{
+
+res.sendFile(
+path.join(
+__dirname,
+"public",
+"login.html"
+)
+);
 });
 
-// API route
-app.get("/products", (req, res) => {
-  const data = fs.readFileSync(
-    path.join(__dirname, "public", "products.json"),
-    "utf-8"
-  );
+/* PRODUCTS API */
 
-  res.json(JSON.parse(data));
+app.get("/products",(req,res)=>{
+
+const data =
+fs.readFileSync(
+
+path.join(
+__dirname,
+"public",
+"products.json"
+),
+
+"utf-8"
+);
+
+res.json(JSON.parse(data));
 });
 
-// PORT for Render
-const PORT = process.env.PORT || 45000;
+/* PORT */
 
-app.listen(PORT, () => {
-  console.log("Server running on port " + PORT);
+const PORT =
+process.env.PORT || 52900;
+
+app.listen(PORT,()=>{
+
+console.log(
+"Server Running On Port " + PORT
+);
 });
