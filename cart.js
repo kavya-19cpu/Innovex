@@ -1,69 +1,134 @@
-let cart = JSON.parse(localStorage.getItem("cart")) || [];
+let cart =
+JSON.parse(localStorage.getItem("cart")) || [];
 
-function renderCart() {
-  let box = document.getElementById("cartBox");
-  let checkoutBox = document.getElementById("checkoutBox");
-  box.innerHTML = "";
+function renderCart(){
 
-  if (cart.length === 0) {
-    box.innerHTML = "<p style='font-size: 18px; color: #666;'>Your Innovex Cart is empty.</p>";
-    checkoutBox.style.display = "none";
-    document.getElementById("total").innerText = "Total: ₹0";
-    return;
-  }
+let box =
+document.getElementById("cartBox");
 
-  checkoutBox.style.display = "inline-block";
-  let total = 0;
+let checkoutBox =
+document.getElementById("checkoutBox");
 
-  cart.forEach((item, i) => {
-    total += item.price * item.qty;
+box.innerHTML = "";
 
-    box.innerHTML += `
-      <div style="background: white; padding: 15px; margin-bottom: 15px; border-radius: 8px; box-shadow: 0 2px 5px #eee; display: flex; align-items: center; justify-content: space-between; text-align: left;">
-        <img src="${item.image}" width="80" style="border-radius: 5px; object-fit: cover;">
-        <div style="flex: 1; margin-left: 20px;">
-          <h3 style="margin: 0 0 5px 0; font-size: 16px;">${item.name}</h3>
-          <p style="margin: 0; font-weight: bold; color: #B12704;">₹${item.price}</p>
-          <p style="margin: 5px 0 0 0; font-size: 14px; color: #555;">Qty: ${item.qty}</p>
-        </div>
-        <div style="display: flex; gap: 5px;">
-          <button onclick="increase(${i})" style="padding: 5px 10px; background: #e7e9ec; color: black; border: 1px solid #adb1b8;">+</button>
-          <button onclick="decrease(${i})" style="padding: 5px 10px; background: #e7e9ec; color: black; border: 1px solid #adb1b8;">-</button>
-          <button onclick="removeItem(${i})" style="padding: 5px 10px; background: #cc0000;">Delete</button>
-        </div>
-      </div>
-    `;
-  });
+if(cart.length===0){
 
-  document.getElementById("total").innerText = "Subtotal: ₹" + total;
+box.innerHTML = `
+<h2>
+Your Cart Is Empty
+</h2>
+`;
+
+checkoutBox.style.display="none";
+
+return;
 }
 
-function increase(i) {
-  cart[i].qty++;
-  save();
+checkoutBox.style.display="block";
+
+let total = 0;
+
+cart.forEach((item,i)=>{
+
+total += item.price * item.qty;
+
+box.innerHTML += `
+
+<div class="cart-card">
+
+<img
+src="${item.image}"
+class="cart-image"
+>
+
+<div class="cart-details">
+
+<h3>${item.name}</h3>
+
+<p class="price">
+₹${item.price}
+</p>
+
+<p class="qty">
+Quantity: ${item.qty}
+</p>
+
+<div class="cart-buttons">
+
+<button onclick="increase(${i})">
++
+</button>
+
+<button onclick="decrease(${i})">
+-
+</button>
+
+<button
+class="delete-btn"
+onclick="removeItem(${i})">
+
+Delete
+
+</button>
+
+</div>
+
+</div>
+
+</div>
+`;
+});
+
+document.getElementById("total")
+.innerText =
+"Subtotal: ₹" + total;
 }
 
-function decrease(i) {
-  cart[i].qty--;
-  if (cart[i].qty <= 0) cart.splice(i, 1);
-  save();
+function increase(i){
+
+cart[i].qty++;
+
+save();
 }
 
-function removeItem(i) {
-  cart.splice(i, 1);
-  save();
+function decrease(i){
+
+cart[i].qty--;
+
+if(cart[i].qty<=0){
+
+cart.splice(i,1);
 }
 
-function save() {
-  localStorage.setItem("cart", JSON.stringify(cart));
-  renderCart();
+save();
 }
 
-/* CASH ON DELIVERY ACTION */
-function placeCODOrder() {
-  alert("🎉 Order Placed Successfully!\nYour Innovex package will be delivered via Cash on Delivery (COD).");
-  cart = [];
-  save();
+function removeItem(i){
+
+cart.splice(i,1);
+
+save();
+}
+
+function save(){
+
+localStorage.setItem(
+"cart",
+JSON.stringify(cart)
+);
+
+renderCart();
+}
+
+function placeCODOrder(){
+
+alert(
+"Order Placed Successfully"
+);
+
+cart=[];
+
+save();
 }
 
 renderCart();
